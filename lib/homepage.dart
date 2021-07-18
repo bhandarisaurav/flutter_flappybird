@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import "package:flutter/material.dart";
 import 'package:flutter_flappybird/bird.dart';
 
@@ -8,11 +10,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double birdYAxis = 0;
+  double time = 0;
+  double height = 0;
+  double initialHeight = 0;
 
   void jump() {
-    setState(() {
-      birdYAxis -= 0.1;
+    initialHeight = birdYAxis;
+    Timer.periodic(Duration(milliseconds: 100), (timer) {
+      time += 0.05;
+      height = -4.9 * time * time + 5 * time;
+      setState(() {
+        birdYAxis = initialHeight - height;
+      });
     });
+    print('The values are: ${[birdYAxis, time, height, initialHeight]}');
   }
 
   @override
