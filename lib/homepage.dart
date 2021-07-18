@@ -7,6 +7,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double birdYAxis = 0;
+
+  void jump() {
+    setState(() {
+      birdYAxis -= 0.1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +22,14 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             flex: 2,
-            child: Container(
-              color: Colors.blue,
-              child: MyBird(),
+            child: GestureDetector(
+              onTap: jump,
+              child: AnimatedContainer(
+                alignment: Alignment(0, birdYAxis),
+                duration: Duration(milliseconds: 0),
+                color: Colors.blue,
+                child: MyBird(),
+              ),
             ),
           ),
           Expanded(
