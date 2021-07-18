@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter_flappybird/bird.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,8 +13,10 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Expanded(
+            flex: 2,
             child: Container(
               color: Colors.blue,
+              child: MyBird(),
             ),
           ),
           Expanded(
