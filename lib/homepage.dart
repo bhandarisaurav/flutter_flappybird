@@ -9,16 +9,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static double birdYAxis = 0;
+  static double birdYAxis = -0.1;
   double time = 0;
   double height = 0;
   double initialHeight = birdYAxis;
   bool gameHasStarted = false;
+  int _taps = 0;
 
   void jump() {
     setState(() {
       time = 0;
       initialHeight = birdYAxis;
+      _taps += 1;
     });
     print('The values are: ${[birdYAxis, time, height, initialHeight]}');
   }
@@ -30,6 +32,7 @@ class _HomePageState extends State<HomePage> {
       height = -4.9 * time * time + 3 * time;
       setState(() {
         birdYAxis = initialHeight - height;
+        _taps += 1;
       });
       if (birdYAxis > 1) {
         timer.cancel();
@@ -45,21 +48,34 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             flex: 7,
-            child: GestureDetector(
-              onTap: () {
-                if (gameHasStarted) {
-                  jump();
-                } else {
-                  startGame();
-                }
-              },
-              child: AnimatedContainer(
-                alignment: Alignment(0, birdYAxis),
-                duration: Duration(milliseconds: 0),
-                color: Colors.blue,
-                child: MyBird(),
+            child: Stack(children: [
+              GestureDetector(
+                onTap: () {
+                  if (gameHasStarted) {
+                    jump();
+                  } else {
+                    startGame();
+                  }
+                },
+                child: AnimatedContainer(
+                  alignment: Alignment(0, birdYAxis),
+                  duration: Duration(milliseconds: 0),
+                  color: Colors.blue,
+                  child: MyBird(),
+                ),
               ),
-            ),
+              Container(
+                alignment: Alignment(0, -0.5),
+                child: Text(
+                  gameHasStarted ? "" : 'TAP TO PLAY',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ]),
           ),
           Container(
             height: 15,
@@ -82,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Text(
-                        "0",
+                        _taps.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 35),
                       ),
                     ],

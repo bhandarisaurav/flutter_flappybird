@@ -4,7 +4,7 @@ class MyBird extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      "lib/images/kusumakar.png",
+      "lib/images/bird.png",
       width: 70,
     );
   }
